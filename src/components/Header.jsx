@@ -7,6 +7,7 @@ import { resetQuotes } from "../store/quotes";
 import { resetUser } from "../store/users";
 
 import DropDown from "./DropDown";
+import { AUTH_TOKEN } from "../config";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Header = () => {
   const handleLogoutClick = () => {
     dispatch(resetQuotes());
     dispatch(resetUser());
+    localStorage.removeItem(AUTH_TOKEN)
     navigate("/login");
   };
 
@@ -48,9 +50,8 @@ const Header = () => {
           <UserIcon className="size-5 " />
           <span className="text-lg mx-2 font-medium">{user_name}</span>
           <ChevronDownIcon
-            className={`size-8 cursor-pointer transition ${
-              showDropDown ? "rotate-180" : null
-            }`}
+            className={`size-8 cursor-pointer transition ${showDropDown ? "rotate-180" : null
+              }`}
             onClick={toggleDropDown}
           />
           {showDropDown ? (

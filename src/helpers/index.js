@@ -1,8 +1,5 @@
+import { AUTH_TOKEN } from "../config";
+
 export const getUserTokenLocal = () => {
-  const data = JSON.parse(localStorage.getItem("craft-user"));
-  if (data) {
-    return data.token;
-  } else {
-      return ''
-  }
+  return JSON.parse(localStorage.getItem(AUTH_TOKEN));
 };
