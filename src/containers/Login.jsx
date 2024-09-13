@@ -23,7 +23,8 @@ const Login = () => {
     useLoginMutation();
 
   useEffect(() => {
-    if (getUserTokenLocal()) {
+    const token = getUserTokenLocal()
+    if (token) {
       naviagte('/')
     }
   }, [])
@@ -35,7 +36,7 @@ const Login = () => {
     if (isSuccess && data) {
       localStorage.setItem(
         AUTH_TOKEN,
-        JSON.stringify(data.token)
+        JSON.stringify({ token: data.token, username: userInput })
       );
       dispatch(addUserName(userInput));
       naviagte('/')
