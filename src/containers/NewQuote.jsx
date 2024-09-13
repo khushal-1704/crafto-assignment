@@ -26,9 +26,9 @@ const NewQuote = () => {
 
   useScreenSizeWatcher(setIsMobile, "760px");
 
-  const [createQuotePost, { data, error,isError, isSuccess, reset }] =
+  const [createQuotePost, { data, error, isError, isSuccess, reset }] =
     useCreateQuoteMutation();
-  
+
   useEffect(() => {
     if (data) {
       toast.success("Post Create Successfully");
@@ -80,7 +80,7 @@ const NewQuote = () => {
 
 
   return (
-    <div className="flex relative items-center justify-center h-screen">
+    <div className="flex relative items-center mt-16 justify-center h-screen">
       {isLoading ? (
         <div className="absolute top-0 bottom-0 left-0 right-0 bg-[#33333352] z-50">
           <Loader />
@@ -121,7 +121,7 @@ const NewQuote = () => {
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
             className="text-base outline-none p-2 w-[80%] rounded-lg"
-            placeholder="Please enter your text here"
+            placeholder="Please enter your quote here"
           />
         </div>
         <div className="h-[20%]">
