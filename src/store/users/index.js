@@ -20,6 +20,4 @@ export const appUserSlice = createSlice({
 
 export const { addUserName, resetUser } = appUserSlice.actions;
 
-export const authToken = (state) => state.appUser.auth_token;
-
 export default appUserSlice.reducer;

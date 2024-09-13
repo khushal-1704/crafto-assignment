@@ -4,7 +4,7 @@ import { Config } from "../config";
 import { getUserTokenLocal } from "../helpers";
 
 const baseQueryWithAuth = async (args, api, extraOptions) => {
-  const token = getUserTokenLocal()
+  const token = getUserTokenLocal()?.token
   return fetchBaseQuery({
     baseUrl: Config.API_URL,
     prepareHeaders: async (headers) => {

@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronDownIcon, ChevronLeftIcon, UserIcon } from "@heroicons/react/16/solid";
 
 import { resetQuotes } from "../store/quotes";
-import { resetUser } from "../store/users";
+import { addUserName, resetUser } from "../store/users";
 
 import DropDown from "./DropDown";
 import { AUTH_TOKEN } from "../config";
+import { getUserTokenLocal } from "../helpers";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -19,12 +20,21 @@ const Header = () => {
 
   const toggleDropDown = () => setShowDropDown(!showDropDown);
 
+  useEffect(() => {
+    const username = getUserTokenLocal()?.username
+    if (username) {
+      dispatch(addUserName(username))
+    }
+  }, [])
+
   const handleLogoutClick = () => {
     dispatch(resetQuotes());
     dispatch(resetUser());
     localStorage.removeItem(AUTH_TOKEN)
     navigate("/login");
   };
+
+  console.log(user_name)
 
   return (
     <header className="bg-blue-300 fixed top-0 right-0 left-0 z-50 flex shadow-md items-center justify-between px-3 py-4">
