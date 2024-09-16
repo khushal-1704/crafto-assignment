@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import Login from "./containers/Login";
@@ -15,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/new" element={<NewQuote />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

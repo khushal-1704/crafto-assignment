@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ChevronDownIcon, ChevronLeftIcon, UserIcon } from "@heroicons/react/16/solid";
 
 import { resetQuotes } from "../store/quotes";
@@ -15,7 +15,6 @@ const Header = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
 
-  const { user_name } = useSelector((state) => state.appUser);
   const [showDropDown, setShowDropDown] = useState(false);
 
   const toggleDropDown = () => setShowDropDown(!showDropDown);
@@ -24,6 +23,10 @@ const Header = () => {
     const username = getUserTokenLocal()?.username
     if (username) {
       dispatch(addUserName(username))
+    } else {
+      dispatch(resetUser())
+      dispatch(resetQuotes())
+      navigate('/')
     }
   }, [])
 
