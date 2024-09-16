@@ -14,7 +14,7 @@ import { AUTH_TOKEN } from "../config";
 import { getUserTokenLocal } from "../helpers";
 
 const Login = () => {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
   const [userInput, setUserInput] = useState("");
@@ -25,7 +25,7 @@ const Login = () => {
   useEffect(() => {
     const token = getUserTokenLocal()
     if (token) {
-      naviagte('/')
+      navigate('/')
     }
   }, [])
 
@@ -39,7 +39,7 @@ const Login = () => {
         JSON.stringify({ token: data.token, username: userInput })
       );
       dispatch(addUserName(userInput));
-      naviagte('/')
+      navigate('/')
     }
   }, [isError, isSuccess, data]);
 

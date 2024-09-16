@@ -9,6 +9,7 @@ import { resetUser } from "../store/users";
 
 import Loader from "../components/Loader";
 import QuoteItem from "../components/QuoteItem";
+import { AUTH_TOKEN } from "../config";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,20 +21,24 @@ const Home = () => {
     data: quotesList,
     isLoading,
     isSuccess,
-    error,
     isError,
   } = useFethcQuotesQuery({
     limit: 20,
     offset: currentPage * 20,
   });
 
+  const resetCurrentUser = () => {
+    localStorage.removeItem(AUTH_TOKEN)
+    dispatch(resetQuotes());
+    dispatch(resetUser());
+    navigate("/login");
+  }
+
   useEffect(() => {
-    if (isError && error.status === 401) {
-      dispatch(resetQuotes());
-      dispatch(resetUser());
-      navigate("/login");
+    if (isError) {
+      resetCurrentUser()
     }
-  }, [error]);
+  }, [isError]);
 
   useEffect(() => {
     if (isSuccess && quotesList?.data.length) {
@@ -48,11 +53,11 @@ const Home = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1)
     } else if (currentPage === 0) {
-      return 
+      return
     }
   };
   const handleNextClick = () => {
-      setCurrentPage(currentPage + 1);
+    setCurrentPage(currentPage + 1);
   };
 
   if (isLoading) {
@@ -60,6 +65,7 @@ const Home = () => {
   }
 
   if (isError) {
+    resetCurrentUser()
     return (
       <div className="mt-16 flex items-center justify-center p-20 space-x-3">
         <ExclamationCircleIcon className="size-10 text-gray-200" />
@@ -88,11 +94,10 @@ const Home = () => {
       <div className="flex items-center justify-center w-full mt-6">
         <div className="flex items-center">
           <button
-            className={`w-full flex items-center justify-center py-3 px-4 mr-2 rounded-lg text-white focus:outline-none ${
-              currentPage === 0
-                ? "bg-blue-300"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}
+            className={`w-full flex items-center justify-center py-3 px-4 mr-2 rounded-lg text-white focus:outline-none ${currentPage === 0
+              ? "bg-blue-300"
+              : "bg-blue-600 hover:bg-blue-700"
+              }`}
             disabled={currentPage === 0}
             onClick={handleBackClick}
           >
@@ -100,9 +105,8 @@ const Home = () => {
             <span className="px-2 text-sm">Back</span>
           </button>
           <button
-            className={`w-full flex items-center justify-center py-3 px-4 text-sm tracking-wide rounded-lg text-white focus:outline-none ${
-              isListEnd ? "bg-blue-300 " : "bg-blue-600 hover:bg-blue-700 "
-            }`}
+            className={`w-full flex items-center justify-center py-3 px-4 text-sm tracking-wide rounded-lg text-white focus:outline-none ${isListEnd ? "bg-blue-300 " : "bg-blue-600 hover:bg-blue-700 "
+              }`}
             onClick={handleNextClick}
             disabled={isListEnd}
           >

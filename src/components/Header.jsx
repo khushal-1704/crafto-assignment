@@ -34,7 +34,7 @@ const Header = () => {
     navigate("/login");
   };
 
-  console.log(user_name)
+
 
   return (
     <header className="bg-blue-300 fixed top-0 right-0 left-0 z-50 flex shadow-md items-center justify-between px-3 py-4">
@@ -58,7 +58,7 @@ const Header = () => {
       <div>
         <div className="flex items-center relative">
           <UserIcon className="size-5 " />
-          <span className="text-lg mx-2 font-medium">{user_name}</span>
+          <span className="text-lg mx-2 font-medium">{getUserTokenLocal()?.username}</span>
           <ChevronDownIcon
             className={`size-8 cursor-pointer transition ${showDropDown ? "rotate-180" : null
               }`}
