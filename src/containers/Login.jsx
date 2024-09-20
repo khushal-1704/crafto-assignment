@@ -27,7 +27,7 @@ const Login = () => {
     if (token) {
       navigate('/')
     }
-  }, [])
+  }, [userInput, isSuccess])
 
   useEffect(() => {
     if (isError) {
@@ -50,6 +50,7 @@ const Login = () => {
   }, [otp]);
 
   const handleLogin = () => {
+    if (isLoading) return;
     if (error) {
       reset();
     }
@@ -58,6 +59,8 @@ const Login = () => {
         username: userInput,
         otp,
       });
+    } else {
+      toast.error('Please enter valid username and OTP');
     }
   };
 
